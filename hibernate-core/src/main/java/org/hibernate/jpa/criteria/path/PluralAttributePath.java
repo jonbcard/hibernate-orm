@@ -53,7 +53,7 @@ public class PluralAttributePath<X> extends AbstractPathImpl<X> implements Seria
 	}
 
 	private static CollectionPersister resolvePersister(CriteriaBuilderImpl criteriaBuilder, PluralAttribute attribute) {
-		SessionFactoryImplementor sfi = criteriaBuilder.getEntityManagerFactory().getSessionFactory();
+		SessionFactoryImplementor sfi = criteriaBuilder.getSessionFactory();
 		return sfi.getCollectionPersister( resolveRole( attribute ) );
 	}
 

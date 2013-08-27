@@ -119,7 +119,7 @@ public class RootImpl<X> extends AbstractFromImpl<X,X> implements Root<X>, Seria
 		public TreatedRoot(RootImpl<? super T> original, Class<T> treatAsType) {
 			super(
 					original.criteriaBuilder(),
-					original.criteriaBuilder().getEntityManagerFactory().getMetamodel().entity( treatAsType )
+					original.criteriaBuilder().getSessionFactory().getJpaMetamodel().entity( treatAsType )
 			);
 			this.original = original;
 			this.treatAsType = treatAsType;

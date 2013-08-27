@@ -197,7 +197,7 @@ public class MapKeyHelpers {
 					: BindableType.SINGULAR_ATTRIBUTE;
 
 			String guessedRoleName = determineRole( attribute );
-			SessionFactoryImplementor sfi = criteriaBuilder.getEntityManagerFactory().getSessionFactory();
+			SessionFactoryImplementor sfi = criteriaBuilder.getSessionFactory();
 			mapPersister = sfi.getCollectionPersister( guessedRoleName );
 			if ( mapPersister == null ) {
 				throw new IllegalStateException( "Could not locate collection persister [" + guessedRoleName + "]" );

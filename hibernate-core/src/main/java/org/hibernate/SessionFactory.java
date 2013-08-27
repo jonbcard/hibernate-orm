@@ -28,6 +28,7 @@ import java.sql.Connection;
 import java.util.Map;
 import java.util.Set;
 import javax.naming.Referenceable;
+import javax.persistence.metamodel.Metamodel;
 
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
@@ -405,4 +406,5 @@ public interface SessionFactory extends Referenceable, Serializable {
 	 * @return The factory's {@link TypeHelper}
 	 */
 	public TypeHelper getTypeHelper();
+
 }

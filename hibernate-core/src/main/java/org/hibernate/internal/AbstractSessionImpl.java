@@ -57,10 +57,13 @@ import org.hibernate.engine.transaction.spi.TransactionEnvironment;
 import org.hibernate.id.uuid.StandardRandomStrategy;
 import org.hibernate.jdbc.WorkExecutor;
 import org.hibernate.jdbc.WorkExecutorVisitable;
+import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
 import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.procedure.ProcedureCall;
 import org.hibernate.procedure.internal.ProcedureCallImpl;
 import org.hibernate.type.Type;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  * Functionality common to stateless and stateful sessions
@@ -70,11 +73,14 @@ import org.hibernate.type.Type;
 public abstract class AbstractSessionImpl implements Serializable, SharedSessionContract,
 													 SessionImplementor, TransactionContext {
 	protected transient SessionFactoryImpl factory;
+	private final CriteriaBuilder criteriaBuilder;
 	private final String tenantIdentifier;
 	private boolean closed = false;
 
+
 	protected AbstractSessionImpl(SessionFactoryImpl factory, String tenantIdentifier) {
 		this.factory = factory;
+		this.criteriaBuilder = new CriteriaBuilderImpl( factory );
 		this.tenantIdentifier = tenantIdentifier;
 		if ( MultiTenancyStrategy.NONE == factory.getSettings().getMultiTenancyStrategy() ) {
 			if ( tenantIdentifier != null ) {
@@ -318,6 +324,12 @@ public abstract class AbstractSessionImpl implements Serializable, SharedSession
 			}
 		}
 		return jdbcConnectionAccess;
+	}
+
+	@Override
+	public CriteriaBuilder getCriteriaBuilder() {
+		errorIfClosed();
+		return criteriaBuilder;
 	}
 
 	private UUID sessionIdentifier;

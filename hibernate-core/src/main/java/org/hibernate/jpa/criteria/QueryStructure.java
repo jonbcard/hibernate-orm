@@ -136,8 +136,8 @@ public class QueryStructure<T> implements Serializable {
 	}
 
 	public <X> Root<X> from(Class<X> entityClass) {
-		EntityType<X> entityType = criteriaBuilder.getEntityManagerFactory()
-				.getMetamodel()
+		EntityType<X> entityType = criteriaBuilder.getSessionFactory()
+				.getJpaMetamodel()
 				.entity( entityClass );
 		if ( entityType == null ) {
 			throw new IllegalArgumentException( entityClass + " is not an entity" );

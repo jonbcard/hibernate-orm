@@ -67,8 +67,8 @@ public abstract class AbstractManipulationCriteriaQuery<T> implements Compilable
 	// Root ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public Root from(Class<T> entityClass) {
-		EntityType<T> entityType = criteriaBuilder.getEntityManagerFactory()
-				.getMetamodel()
+		EntityType<T> entityType = criteriaBuilder.getSessionFactory()
+				.getJpaMetamodel()
 				.entity( entityClass );
 		if ( entityType == null ) {
 			throw new IllegalArgumentException( entityClass + " is not an entity" );

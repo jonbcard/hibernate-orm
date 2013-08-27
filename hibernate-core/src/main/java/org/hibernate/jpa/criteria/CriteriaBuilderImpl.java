@@ -51,6 +51,7 @@ import javax.persistence.criteria.Selection;
 import javax.persistence.criteria.SetJoin;
 import javax.persistence.criteria.Subquery;
 
+import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.jpa.internal.EntityManagerFactoryImpl;
 import org.hibernate.jpa.criteria.expression.BinaryArithmeticOperation;
 import org.hibernate.jpa.criteria.expression.CoalesceExpression;
@@ -102,20 +103,42 @@ import org.hibernate.jpa.criteria.predicate.NullnessPredicate;
  */
 public class CriteriaBuilderImpl implements CriteriaBuilder, Serializable {
 	private final EntityManagerFactoryImpl entityManagerFactory;
+	private final SessionFactoryImpl sessionFactoryImpl;
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	public CriteriaBuilderImpl(EntityManagerFactoryImpl entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
+		this.sessionFactoryImpl = entityManagerFactory.getSessionFactory();
+	}
+
+	public CriteriaBuilderImpl(SessionFactoryImpl sessionFactory) {
+		this.entityManagerFactory = null;
+		this.sessionFactoryImpl = sessionFactory;
 	}
 
 	/**
 	 * Provides protected access to the underlying {@link EntityManagerFactoryImpl}.
 	 *
 	 * @return The underlying {@link EntityManagerFactoryImpl}
+	 * @deprecated This may not be set if this was created using a {@link org.hibernate.SessionFactory},
+	 * 	so may return null. Use
 	 */
+	@Deprecated
 	public  EntityManagerFactoryImpl getEntityManagerFactory() {
 		return entityManagerFactory;
 	}
 
+	/**
+	 * Provides access to the underlying {@link SessionFactoryImpl}.
+	 *
+	 * @return The underlying {@link SessionFactoryImpl}
+	 */
+	public SessionFactoryImpl getSessionFactory() {
+		return sessionFactoryImpl;
+	}
 
 	// Query builders ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

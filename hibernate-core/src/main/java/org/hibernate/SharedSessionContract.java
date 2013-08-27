@@ -27,6 +27,8 @@ import java.io.Serializable;
 
 import org.hibernate.procedure.ProcedureCall;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 /**
  * Contract methods shared between {@link Session} and {@link StatelessSession}.
  * 
@@ -154,5 +156,13 @@ public interface SharedSessionContract extends Serializable {
 	 * @return The criteria instance for manipulation and execution
 	 */
 	public Criteria createCriteria(String entityName, String alias);
+
+	/**
+	 * Returns an instance of JPA {@link CriteriaBuilder} for the creation of
+	 * {@link javax.persistence.criteria.CriteriaQuery} objects.
+	 *
+	 * @return A new {@link CriteriaBuilder} instance.
+	 */
+	public CriteriaBuilder getCriteriaBuilder();
 
 }

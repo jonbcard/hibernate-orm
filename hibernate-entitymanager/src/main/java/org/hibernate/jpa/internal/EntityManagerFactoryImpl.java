@@ -137,7 +137,7 @@ public class EntityManagerFactoryImpl implements HibernateEntityManagerFactory {
 		this.discardOnClose = settings.isReleaseResourcesOnCloseEnabled();
 		this.sessionInterceptorClass = settings.getSessionInterceptorClass();
 		this.metamodel = (MetamodelImpl)sessionFactory.getJpaMetamodel();
-		this.criteriaBuilder = new CriteriaBuilderImpl( this );
+		this.criteriaBuilder = new CriteriaBuilderImpl( this.sessionFactory );
 		this.util = new HibernatePersistenceUnitUtil( this );
 
 		HashMap<String,Object> props = new HashMap<String, Object>();
